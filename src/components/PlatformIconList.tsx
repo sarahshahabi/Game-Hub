@@ -11,9 +11,34 @@ interface Props {
 
 
 
+// function PlatformIconList({ platforms }: Props) {
+//  
+//   const iconMap: {[key: string] : IconType}  = {
+//     pc: FaWindows,
+//     playstation: FaPlaystation,
+//     xbox: FaXbox,
+//     nintendo: BsNintendoSwitch,
+//     mac: FaApple,
+//     ios: MdPhoneIphone,
+//     android: FaAndroid,
+//     linux: FaLinux,
+//     web: BsGlobe,
+//   }
+// 
+//   
+//   return (
+//     <HStack marginY={1} >
+//       {platforms.map((p) => <Icon key={p.id} as={iconMap[p.slug]} color={"gray.600"}/>)}
+//     </HStack>
+//   )
+// }
+// 
+// export default PlatformIconList
+
+
 function PlatformIconList({ platforms }: Props) {
- 
-  const iconMap: {[key: string] : IconType}  = {
+
+  const iconMap: { [key: string]: IconType } = {
     pc: FaWindows,
     playstation: FaPlaystation,
     xbox: FaXbox,
@@ -25,10 +50,14 @@ function PlatformIconList({ platforms }: Props) {
     web: BsGlobe,
   }
 
-  
+
   return (
-    <HStack marginY={1} >
-      {platforms.map((p) => <Icon key={p.id} as={iconMap[p.slug]} color={"gray.600"}/>)}
+    <HStack marginY={1}>
+      {platforms.map((p) => {
+        const key = Object.keys(iconMap).find((k) => p.slug.startsWith(k))
+        if (!key) return null // skip platforms with no matching icon
+        return <Icon key={p.id} as={iconMap[key]} color={"gray.600"} />
+      })}
     </HStack>
   )
 }
